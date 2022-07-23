@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Dog } = require('../db')
-const { getAllDogs, createDog, getDogDB, getDogApi } = require('../controllers/dogControllers');
+const { getAllDogs} = require('../controllers/dogControllers');
 
 
 
@@ -9,12 +9,6 @@ const { getAllDogs, createDog, getDogDB, getDogApi } = require('../controllers/d
 
 
 const router = Router();
-
-// router.get('/', getDB)
-
-
-
-
 
 router.get('/', async (req, res, next) => {
     try {
