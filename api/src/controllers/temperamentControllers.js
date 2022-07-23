@@ -7,49 +7,72 @@ const URL= 'https://api.thedogapi.com/v1/breeds'
 
 
 
-async function getAllTemperaments(req, res){
-    let totalTemperaments= (await axios(URL)).data.map(e => ([e.temperament])).toString().replaceAll(" ", "").split(",").reduce((acc, item) =>{
+async function getTempApi(req, res){
+    let temperamentsAPI= (await axios(URL)).data.map(e => ([e.temperament])).toString().replaceAll(" ", "").split(",").reduce((acc, item) =>{
         if(!acc.includes(item)){
             acc.push(item);
         }
+        console.log(acc)
         return acc;
     }, [])
 
-    totalTemperaments.forEach(element => {
+    temperamentsAPI.forEach(element => {
         Temperament.findOrCreate({
             attributes: ['name'],
             where: {name: element},
         })
     });
 
-    const allTemps= await Temperament.findAll();
+    let allTemps= temperamentsAPI.filter(e => e !== "")
+            console.log(allTemps)
+           res.send(allTemps)
+            console.log(Array.isArray(temperamentsAPI))
+            console.log(temperamentsAPI.length)
+}
 
+// async function getTempDB(req, res){
+//     let temperamentDB = await Temperament.findAll({
+//         attributes: ['name']
+//     })
+// }
+    // const allTemps= await Temperament.findAll(
+    //     {
+    //     attributes: {
+    //         excludes: ['id']
+    //     }
+    // });
 
-        res.send(allTemps)
+// async function getAllTemperaments(req, res, next){
+//     try {
+//         const tempApi= await getTempApi();
+//         const tempDB= await getTempDB();
+//         const allTemps= [...tempApi, ...tempDB]
+//         res.send(allTemps)
+        
+//     } catch (error) {
+//         next(error)
+//     }
+    
+// }
 
-        console.log(allTemps)
-        console.log(Array.isArray(totalTemperaments))
-        console.log(totalTemperaments.length)
-
-    }
 
     
+    
    
-    async function createTemp(req, res, next) {
-        const {name} = req.body
-        if(!name) return res.status(404).send('Falta algún parámetro obligatorio')
-        try {
-            const newTemp= await Temperament.create(req.body)
-            res.status(201).json(newTemp)
-        } catch (error) {
-            next(error)
-        }
-    }
+    // async function createTemp(req, res, next) {
+    //     const {name} = req.body
+    //     if(!name) return res.status(404).send('Falta algún parámetro obligatorio')
+    //     try {
+    //         const newTemp= await Temperament.create(req.body)
+    //         res.status(201).json(newTemp)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // }
 
 
 
 
 module.exports = {
-    getAllTemperaments,
-    createTemp
+    getTempApi,
 }

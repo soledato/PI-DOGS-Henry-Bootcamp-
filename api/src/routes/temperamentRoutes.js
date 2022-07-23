@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllTemperaments, createTemp } = require('../controllers/temperamentControllers');
+const { getAllTemperaments, createTemp, getDataApi, getTempApi } = require('../controllers/temperamentControllers');
 const { Temperament } = require('../db')
 
 
@@ -21,9 +21,9 @@ const router = Router();
 //     }
 // })
 
-router.get('/', getAllTemperaments)
+router.get('/', getTempApi)
 
-router.post('/', createTemp)
+// router.post('/', createTemp)
 // router.post('/', (req, res, next) => {
 //     const { name } = req.body
 //     return Temperament.create({ name })
