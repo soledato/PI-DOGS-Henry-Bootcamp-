@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { Dog } = require('../db')
+const { Dog, Temperament } = require('../db')
 const { getAllDogs} = require('../controllers/dogControllers');
 
 
@@ -13,9 +13,9 @@ const router = Router();
 router.get('/', async (req, res, next) => {
     try {
         const { name } = req.query
-        const allDogs = await getAllDogs()
+        let allDogs = await getAllDogs();
         if (name) {
-            const dogsByName = allDogs.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))
+            let dogsByName = await allDogs.filter(e => e.name.toLowerCase().includes(name.toLowerCase()))
             if (dogsByName.length) res.status(200).send(dogsByName)
             res.status(404).send('Dog not found')
         } else {
@@ -28,10 +28,17 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const { id } = req.params
+        const { id } = (req.params)
         const allDogs = await getAllDogs()
-        const dogById = allDogs.find(e => parseInt(e.id) === parseInt(id))
-        res.json(dogById || 'Dog not exist')
+        if(id){
+        let dogId= await allDogs.filter(e => e.id == id)
+        dogId.length ? 
+        res.status(200).json(dogId) :
+        res.status(404).send('Dog not found')
+        }
+
+        // const dogById = allDogs.find(e => parseInt(e.id) === parseInt(id))
+        // res.json(dogById || 'Dog not exist')
 
     } catch (error) {
         next(error)
@@ -39,12 +46,20 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    const { name, height_min, height_max, weight_min, weight_max, life_span } = req.body
-    if (!name || !height_min || !height_max || !weight_min || !weight_max) {
+    const { name, height_min, height_max, weight_min, weight_max, image, temperament, life_span, createdInDb } = req.body
+    if (!name || !height_min || !height_max || !weight_min || !weight_max || !image) {
         return res.status(404).send('Falta algún parámetro obligatorio')
     }
     try {
-        const newDog = await Dog.create(req.body)
+        const newDog = await Dog.create({
+            name, height_min, height_max, weight_min, weight_max, image, life_span, createdInDb 
+        })
+
+        let dbTemperament = await Temperament.findAll({
+            where: {name: temperament}
+        })
+
+        newDog.addTemperament(dbTemperament)
         res.status(201).json(newDog)
     } catch (error) {
         next(error)

@@ -12,13 +12,12 @@ async function getTempApi(req, res){
         if(!acc.includes(item)){
             acc.push(item);
         }
-        console.log(acc)
         return acc;
     }, [])
-
+console.log(temperamentsAPI)
     temperamentsAPI.forEach(element => {
         Temperament.findOrCreate({
-            attributes: ['name'],
+            // attributes: ['name'],
             where: {name: element},
         })
     });
@@ -29,48 +28,6 @@ async function getTempApi(req, res){
             console.log(Array.isArray(temperamentsAPI))
             console.log(temperamentsAPI.length)
 }
-
-// async function getTempDB(req, res){
-//     let temperamentDB = await Temperament.findAll({
-//         attributes: ['name']
-//     })
-// }
-    // const allTemps= await Temperament.findAll(
-    //     {
-    //     attributes: {
-    //         excludes: ['id']
-    //     }
-    // });
-
-// async function getAllTemperaments(req, res, next){
-//     try {
-//         const tempApi= await getTempApi();
-//         const tempDB= await getTempDB();
-//         const allTemps= [...tempApi, ...tempDB]
-//         res.send(allTemps)
-        
-//     } catch (error) {
-//         next(error)
-//     }
-    
-// }
-
-
-    
-    
-   
-    // async function createTemp(req, res, next) {
-    //     const {name} = req.body
-    //     if(!name) return res.status(404).send('Falta algún parámetro obligatorio')
-    //     try {
-    //         const newTemp= await Temperament.create(req.body)
-    //         res.status(201).json(newTemp)
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // }
-
-
 
 
 module.exports = {

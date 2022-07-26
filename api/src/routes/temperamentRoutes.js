@@ -23,26 +23,6 @@ const router = Router();
 
 router.get('/', getTempApi)
 
-// router.post('/', createTemp)
-// router.post('/', (req, res, next) => {
-//     const { name } = req.body
-//     return Temperament.create({ name })
-//         .then((newTemperament) => {
-//             newTemperament
-//             res.status(201).send(newTemperament)
-//         })
-//         .catch((error) => next(error))
-// })
-
-
-router.put('/', (req, res) => {
-    res.send('Soy put de TemperamentRutes')
-})
-router.delete('/', (req, res) => {
-    res.send('Soy delete de TemperamentRutes')
-})
-
-
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);

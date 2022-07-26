@@ -24,13 +24,13 @@ async function getDogApi() {
 
 async function getDogDB() {
   let dog = await Dog.findAll({
-    include: [{
+    include: {
       model: Temperament,
       attributes: ['name'],                                                      //Incluyo Activity
       through: {
-        attributes: []
-      }
-    }]
+        attributes: [],
+      },
+    }
   })
   return dog
 }
@@ -42,6 +42,8 @@ async function getAllDogs() {
   console.log(allDogs[3])
   return allDogs
 }
+//---- 
+
 
 module.exports = {
   getAllDogs
