@@ -46,26 +46,34 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    const { name, height_min, height_max, weight_min, weight_max, image, temperament, life_span, createdInDb } = req.body
-    if (!name || !height_min || !height_max || !weight_min || !weight_max || !image) {
-        return res.status(404).send('Falta algún parámetro obligatorio')
-    }
-    try {
+    // if (!name || !height_min || !height_max || !weight_min || !weight_max) {
+        //     return res.status(404).send('Falta algún parámetro obligatorio')
+        // }
+        try {
+        const { name, height_min, height_max, weight_min, weight_max, image, temperaments , life_span, createdInDb } = req.body
         const newDog = await Dog.create({
-            name, height_min, height_max, weight_min, weight_max, image, life_span, createdInDb 
+            name, 
+            height_min, 
+            height_max, 
+            weight_min, 
+            weight_max, 
+            life_span, 
+            createdInDb,
+            temperaments,
+            image: image ? image : "https://images.unsplash.com/photo-1505628346881-b72b27e84530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
         })
 
         let dbTemperament = await Temperament.findAll({
-            where: {name: temperament}
-        })
-
+            where: {name: temperaments},
+        })  
         newDog.addTemperament(dbTemperament)
+
         res.status(201).json(newDog)
     } catch (error) {
         next(error)
     }
 })
-
+    
 
 
 
