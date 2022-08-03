@@ -1,13 +1,35 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
-import { getAllDogs } from "../../redux/actions";
-import { bindActionCreators } from "redux";
+/* eslint-disable no-unused-vars */
+import React from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getDogsbyName } from "../../redux/actions";
 
-export default function NavBar(){
+
+const SearchBar = ()=>{
+
+    const dispatch = useDispatch();
+    const [name, setName] = useState("")
+
+    const handleChange = (e) =>{
+        e.preventDefault();
+        setName(e.target.value)
+        console.log(name)
+        
+
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        dispatch(getDogsbyName(name))
+        setName(e.target.value = "")
+    }
+
     return (
-        <nav>
-            ul
-        </nav>
+      <div>
+          <input type="text" placeholder="search..." onChange={e => handleChange(e)} value={name}/>
+          <button type="submit" onClick={(e) => handleSubmit(e)}>Click here</button>
+      </div>
     )
 }
+
+export default SearchBar;
