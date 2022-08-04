@@ -19,10 +19,10 @@ async function getDogApi() {
       image: e.image.url 
     } 
   })
+  console.log(dogsApi)
   return dogsApi
 }
   
-
 async function getDogDB(){
   return await Dog.findAll({
     include:{
