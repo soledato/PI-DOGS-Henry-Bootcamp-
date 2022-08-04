@@ -5,7 +5,7 @@ import { GET_ALL_DOGS, FILTER_BY_BREEDS, ORDER_ALPHABETIC, ORDER_WEIGHT, GET_DOG
 const initialState = {
     dogs: [],
     allDogs: [],
-    temperaments: [],
+    allTemperaments: [],
     dogDetail: []
 };
 
@@ -27,7 +27,7 @@ function rootReducer(state = initialState, action) {
         case GET_ALL_TEMPERAMENTS:
             return{
                 ...state,
-                temperaments: action.payload
+                allTemperaments: action.payload
             }
         
         case GET_DOG_DETAIL:
@@ -87,36 +87,21 @@ function rootReducer(state = initialState, action) {
                 dogs: orderDog
             }
 
-        // case ORDER_WEIGHT:
+        case ORDER_WEIGHT:
+            const weightAllDogs = state.allDogs.filter(e => e.weight_min)
+            const orderWeight= action.payload === "asc" ?
+            weightAllDogs.sort((a, b) => {
+                return a.weight_min - b.weight_min
+            })
+            : weightAllDogs.sort((a,b)=>{
+                return a.weight_max - b.weight_max
+            })
+            return{
+                ...state,
+                dogs: orderWeight
+            }
             
-        //     const orderByWeight = action.payload === "asc" ?
-        //         state.allDogs.sort((a, b) => {
-        //             if (a.weight_min > b.weight_min) {
-        //                 return 1;
-        //             }
-        //             if (b.weight_min> a.weight_min) {
 
-        //                 return -1
-        //             }
-        //             return 0;
-                
-        //         }) :
-        //         state.allDogs.sort((a, b) => {
-        //             if (a.weight_max > b.weight_max) {
-        //                 return -1;
-        //             }
-        //             if (b.weight_max > a.weight_max) {
-
-        //                 return 1
-        //             }
-        //             return 0;
-                
-        //         })
-
-        //     return {
-        //         ...state,
-        //         dogs: orderByWeight
-        //     }
        
         default: return state
     }

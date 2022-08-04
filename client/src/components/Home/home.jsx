@@ -15,7 +15,7 @@ const Home = () => {
    const dispatch = useDispatch();
 
    const allDogs = useSelector((state) => state.dogs)
-   const temperaments = useSelector((state) => state.temperaments)
+   const allTemperaments = useSelector((state) => state.allTemperaments)
    console.log(allDogs)
    const [currentPage, setCurrentPage] = useState(1)
    const [dogsPage, setDogsPage] = useState(8)
@@ -81,6 +81,7 @@ const Home = () => {
                <option value="asc"> A - Z </option>
                <option value="desc"> Z - A </option>
             </select>
+
             <select onChange={e => handleOrderWeight(e)} id="">
                <option hidden>Order by weight</option>
                <option value="asc">  (- kg)  </option>
@@ -90,9 +91,9 @@ const Home = () => {
 
          <div>
             <select onChange={handleFilterTemperaments}>
-               <option hidden>Temperaments</option>
+               <option hidden>All temperaments</option>
                {
-                  temperaments.map(temp => (
+                  allTemperaments.map(temp => (
                      <option value={temp.name} key={temp.id}>{temp.name}</option>
                   ))}
             </select>
@@ -117,7 +118,7 @@ const Home = () => {
                         <Card
 
                            name={e.name}
-                           temperament={e.temperament ? e.temperament.toLowerCase() : e.temperaments.map(t => t.name.toLowerCase())}
+                           temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) =>  t.name.toLowerCase()))}
                            weight_min={"Lower weight: " + e.weight_min + " kilos"}
                            weight_max={"Higher weight: " + e.weight_max + " kilos"}
                            image={e.image}

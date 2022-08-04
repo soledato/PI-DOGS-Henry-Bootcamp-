@@ -7,7 +7,7 @@ import { postDog, getAllTemperaments } from "../../redux/actions";
 
 const DogCreate = () => {
     const dispatch = useDispatch()
-    const temperaments = useSelector((state) => state.temperaments)
+    const temperaments = useSelector((state) => state.allTemperaments)
     const [input, setInput] = useState({
         name: "",
         height_min: "",
@@ -46,7 +46,7 @@ const DogCreate = () => {
             life_span: "",
             temperaments: []
         })
-        history.push('/home ')
+        history.push('/home')
     }
 
     const handleSelectTemp = (e) => {
@@ -97,8 +97,8 @@ const DogCreate = () => {
                 <div>
                     <label>Temperaments: </label>
                     <select onChange={(e)=>handleSelectTemp(e)}>
-                        {temperaments.map(temp => (
-                            <option value={temp.name}>{temp.name}</option>
+                        {temperaments && temperaments.map(temp => (
+                            <option key={temp.id} value={temp.name}>{temp.name}</option>
                         ))}
                     </select>
                     <ul><li>{input.temperaments.map(temp => temp + ", ")}</li></ul>
