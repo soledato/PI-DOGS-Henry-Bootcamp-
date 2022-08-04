@@ -1,6 +1,8 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
-const Card= ({name, temperament, weight_min, weight_max, image}) =>{
+const Card= ({id, name, temperament, weight_min, weight_max, image}) =>{
+    console.log(id, name)
 return(
     <div> 
         <h3>{name[0].toUpperCase() + name.substring(1)}</h3>
@@ -8,6 +10,8 @@ return(
         <p>Temperament: {temperament + "  "}</p>
         <p>{weight_min}</p>
         <p>{weight_max}</p>
+        {/* <p>{id}</p> */}
+        
     </div>
 )
 

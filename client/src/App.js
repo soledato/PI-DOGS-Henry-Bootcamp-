@@ -13,8 +13,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route path="/home" component={Home} />
+        <Route path="/dogs/:id" component={DogDetail}/>
         <Route path="/dogs" component={DogCreate}/>
-        {/* <Route path="dogs/:id" component={DogDetail}/> */}
       </Switch>
     </div>
     </BrowserRouter>

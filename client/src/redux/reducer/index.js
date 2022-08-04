@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable default-case */
-import { GET_ALL_DOGS, FILTER_BY_BREEDS, ORDER_ALPHABETIC, ORDER_WEIGHT, GET_DOGS_BY_NAME, POST_DOG, GET_ALL_TEMPERAMENTS, FILTER_BY_TEMPERAMENTS, GET_DOG_DETAIL } from "../actions"
+import { GET_ALL_DOGS, FILTER_BY_BREEDS, ORDER_ALPHABETIC, ORDER_WEIGHT, GET_DOGS_BY_NAME, POST_DOG, GET_ALL_TEMPERAMENTS, FILTER_BY_TEMPERAMENTS, GET_DOG_DETAIL, RESET_STATE } from "../actions"
 
 const initialState = {
     dogs: [],
@@ -17,31 +17,31 @@ function rootReducer(state = initialState, action) {
                 dogs: action.payload,
                 allDogs: action.payload
             }
-        
+
         case GET_DOGS_BY_NAME:
             return {
                 ...state,
                 dogs: action.payload
             }
-        
+
         case GET_ALL_TEMPERAMENTS:
-            return{
+            return {
                 ...state,
                 allTemperaments: action.payload
             }
-        
+
         case GET_DOG_DETAIL:
-            return{
+            return {
                 ...state,
                 dogDetail: action.payload
             }
 
-        
+
         case POST_DOG:
-            return{
+            return {
                 ...state,
             }
-    
+
         case FILTER_BY_BREEDS:
             const allBreeds = state.allDogs
             const filteredBreeds = action.payload === "all"
@@ -51,14 +51,14 @@ function rootReducer(state = initialState, action) {
                 ...state,
                 dogs: filteredBreeds
             }
-        
-            // case FILTER_BY_TEMPERAMENTS:
-            //     const allTemperaments = state.temperaments
-            //     const filteredTemperaments = allTemperaments.filter(el => el.temperament.includes(action.payload))
-            //     return{
-            //         ...state,
-            //         dogs: filteredTemperaments
-            //     }
+
+        // case FILTER_BY_TEMPERAMENTS:
+        //     const allTemperaments = state.temperaments
+        //     const filteredTemperaments = allTemperaments.filter(el => el.temperament.includes(action.payload))
+        //     return{
+        //         ...state,
+        //         dogs: filteredTemperaments
+        //     }
 
 
         case ORDER_ALPHABETIC:
@@ -88,21 +88,47 @@ function rootReducer(state = initialState, action) {
             }
 
         case ORDER_WEIGHT:
-            const weightAllDogs = state.allDogs.filter(e => e.weight_min)
-            const orderWeight= action.payload === "asc" ?
-            weightAllDogs.sort((a, b) => {
+            // const orderW = action.payload === "asc" ?
+            //     state.dogs.sort(function (a, b) {
+            //         if (a.weight_min > b.weight_min) {
+            //             return 1;
+            //         }
+            //         if (b.weight_max > a.weight_max) {
+            //             return -1;
+            //         }
+            //         return 0
+            //     }) :
+
+            //     state.dogs.sort(function (a, b) {
+            //         if (a.weight_min > b.weight_min) {
+            //             return -1
+            //         }
+            //         if (b.weight_max > a.weight_max) {
+            //             return 1
+            //         }
+            //         return 0;
+            //     })
+            const allDogsW = state.allDogs.filter(e => e.weight_min)
+            const orderW= action.payload === 'asc' ?
+            allDogsW.sort((a,b)=>{
                 return a.weight_min - b.weight_min
             })
-            : weightAllDogs.sort((a,b)=>{
-                return a.weight_max - b.weight_max
+            :
+            allDogsW.sort((a,b) =>{
+                return b.weight_max - a.weight_max
             })
+            return {
+                ...state,
+                dogs: orderW
+            }
+
+        case RESET_STATE:
             return{
                 ...state,
-                dogs: orderWeight
+                dogDetail:{}
             }
-            
 
-       
+
         default: return state
     }
 

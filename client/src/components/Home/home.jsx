@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getAllDogs, filterByBreeds, orderAlphabetic, orderWeight, getAllTemperaments, filterByTemperaments } from "../../redux/actions";
+import { getAllDogs, filterByBreeds, orderAlphabetic, orderWeight, getAllTemperaments, filterByTemperaments, resetState } from "../../redux/actions";
 import Card from "../Card";
 import Paginado from "../Paginado";
 import SearchBar from "../SearchBar/SearchBar";
@@ -113,18 +113,18 @@ const Home = () => {
          {currentDogs?.map((e) => {
             return (
                <div key={e.id}>
-                  {/* <Link to={'/home/'}> */}
                      <div>
+                
                         <Card
-
-                           name={e.name}
-                           temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) => " " + t.name.toLowerCase()))}
-                           weight_min={"Lower weight: " + e.weight_min + " kilos"}
-                           weight_max={"Higher weight: " + e.weight_max + " kilos"}
-                           image={e.image}
+                        name={e.name}
+                        temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) => " " + t.name.toLowerCase()))}
+                        weight_min={"Lower weight: " + e.weight_min + " kilos"}
+                        weight_max={"Higher weight: " + e.weight_max + " kilos"}
+                        image={e.image}
                         />
+                         <Link to={"/dogs/"+e.id}> <button>more...</button> </Link>
+                 
                      </div>
-                  {/* </Link> */}
                </div>
             )
          }
