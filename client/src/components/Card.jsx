@@ -5,7 +5,7 @@ return(
     <div> 
         <h3>{name[0].toUpperCase() + name.substring(1)}</h3>
         <img src={image} alt="img not found" width="250px"/>
-        <p>Temperament: {temperament + " "}</p>
+        <p>Temperament: {temperament + "  "}</p>
         <p>{weight_min}</p>
         <p>{weight_max}</p>
     </div>
