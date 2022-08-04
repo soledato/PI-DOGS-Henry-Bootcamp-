@@ -52,13 +52,21 @@ function rootReducer(state = initialState, action) {
                 dogs: filteredBreeds
             }
 
-        // case FILTER_BY_TEMPERAMENTS:
-        //     const allTemperaments = state.temperaments
-        //     const filteredTemperaments = allTemperaments.filter(el => el.temperament.includes(action.payload))
-        //     return{
-        //         ...state,
-        //         dogs: filteredTemperaments
-        //     }
+        case FILTER_BY_TEMPERAMENTS:
+            const allDogs = state.allDogs.filter(e => e.temperament || e.temperaments)
+            const dogFilterTemp = action.payload === "all" ? allDogs : allDogs.filter(el => {
+                if(el.temperament) return el.temperament.includes(action.payload);
+                if(el.temperaments) {
+                    const temp= el.temperaments.map(e => e.name)
+                    return temp.includes(action.payload)
+                }
+            return true
+            })
+                
+            return{
+                ...state,
+                dogs: dogFilterTemp
+            }
 
 
         case ORDER_ALPHABETIC:
@@ -88,26 +96,6 @@ function rootReducer(state = initialState, action) {
             }
 
         case ORDER_WEIGHT:
-            // const orderW = action.payload === "asc" ?
-            //     state.dogs.sort(function (a, b) {
-            //         if (a.weight_min > b.weight_min) {
-            //             return 1;
-            //         }
-            //         if (b.weight_max > a.weight_max) {
-            //             return -1;
-            //         }
-            //         return 0
-            //     }) :
-
-            //     state.dogs.sort(function (a, b) {
-            //         if (a.weight_min > b.weight_min) {
-            //             return -1
-            //         }
-            //         if (b.weight_max > a.weight_max) {
-            //             return 1
-            //         }
-            //         return 0;
-            //     })
             const allDogsW = state.allDogs.filter(e => e.weight_min)
             const orderW= action.payload === 'asc' ?
             allDogsW.sort((a,b)=>{

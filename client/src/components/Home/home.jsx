@@ -91,7 +91,7 @@ const Home = () => {
 
          <div>
             <select onChange={handleFilterTemperaments}>
-               <option hidden>All temperaments</option>
+               <option value="all">All temperaments</option>
                {
                   allTemperaments.map(temp => (
                      <option value={temp.name} key={temp.id}>{temp.name}</option>
