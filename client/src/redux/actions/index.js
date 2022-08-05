@@ -39,20 +39,42 @@ export const getAllDogs = () => {
 // };
 
 
+// export const getDogsbyName = (name) => {
+//     return async function (dispatch) {
+//         try {
+//             axios.get(`http://localhost:3001/dogs?name=${name}`)
+//                 .then(response => {
+//                     dispatch({
+//                         type: GET_DOGS_BY_NAME,
+//                         payload: response.data
+//                     })
+//                 })
+
+//         } catch (error) {
+//             // alert("Breed not found")
+//             console.log(error)
+//         }
+//     }
+// }
+
 export const getDogsbyName = (name) => {
     return async function (dispatch) {
-        try {
-            axios.get(`http://localhost:3001/dogs?name=${name}`)
-                .then(response => {
-                    dispatch({
-                        type: GET_DOGS_BY_NAME,
-                        payload: response.data
-                    })
+        axios.get(`http://localhost:3001/dogs?name=${name}`)
+            .then(response => {
+                dispatch({
+                    type: GET_DOGS_BY_NAME,
+                    payload: response.data
                 })
+            })
+            .catch(function (error) {
+                if (error.response) {
+                    // Request made and server responded
+                    alert(error.response.data);
+                    console.log(error.response.status);
+                    
+                }
+            })
 
-        } catch (error) {
-            console.log(error)
-        }
     }
 }
 
@@ -127,8 +149,8 @@ export const orderWeight = (payload) => {
     }
 }
 
-export const resetState = () =>{
-    return{
+export const resetState = () => {
+    return {
         type: RESET_STATE
     }
 }

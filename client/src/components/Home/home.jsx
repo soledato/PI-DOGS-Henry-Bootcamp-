@@ -118,8 +118,8 @@ const Home = () => {
                         <Card
                         name={e.name}
                         temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) => " " + t.name.toLowerCase()))}
-                        weight_min={"Lower weight: " + e.weight_min + " kilos"}
-                        weight_max={"Higher weight: " + e.weight_max + " kilos"}
+                        weight_min={"Lower weight: " + e.weight_min + " kilograms"}
+                        weight_max={"Higher weight: " + e.weight_max + " kilograms"}
                         image={e.image}
                         />
                          <Link to={"/dogs/"+e.id}> <button>more...</button> </Link>

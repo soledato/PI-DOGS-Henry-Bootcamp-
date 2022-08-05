@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 const Card= ({id, name, temperament, weight_min, weight_max, image}) =>{
-    console.log(id, name)
+    
 return(
     <div> 
         <h3>{name[0].toUpperCase() + name.substring(1)}</h3>

@@ -9,16 +9,21 @@ const SearchBar = ()=>{
 
     const dispatch = useDispatch();
     const [name, setName] = useState("")
+    
+
+   
+
 
     const handleChange = (e) =>{
         e.preventDefault();
         setName(e.target.value)
         console.log(name)
-        
-
     }
 
     const handleSubmit = (e) =>{
+        if(name.length < 3){
+            alert("Enter at least three characters")
+        }
         e.preventDefault();
         dispatch(getDogsbyName(name))
         setName(e.target.value = "")
