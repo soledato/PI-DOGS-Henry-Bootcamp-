@@ -13,6 +13,7 @@ export const GET_DOG_DETAIL = "GET_DOG_DETAIL"
 export const RESET_STATE = "RESET_STATE"
 
 
+
 export const getAllDogs = () => {
     return async function (dispatch) {
         axios.get("http://localhost:3001/dogs")
@@ -138,4 +139,6 @@ export const resetState = () => {
         type: RESET_STATE
     }
 }
+
+
 
