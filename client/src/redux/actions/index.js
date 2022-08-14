@@ -39,23 +39,7 @@ export const getAllDogs = () => {
 // };
 
 
-// export const getDogsbyName = (name) => {
-//     return async function (dispatch) {
-//         try {
-//             axios.get(`http://localhost:3001/dogs?name=${name}`)
-//                 .then(response => {
-//                     dispatch({
-//                         type: GET_DOGS_BY_NAME,
-//                         payload: response.data
-//                     })
-//                 })
 
-//         } catch (error) {
-//             // alert("Breed not found")
-//             console.log(error)
-//         }
-//     }
-// }
 
 export const getDogsbyName = (name) => {
     return async function (dispatch) {
@@ -80,7 +64,7 @@ export const getDogsbyName = (name) => {
 
 export const getAllTemperaments = () => {
     return async function (dispatch) {
-        try {
+        
             axios.get(`http://localhost:3001/temperaments`)
                 .then(response => {
                     dispatch({
@@ -89,9 +73,9 @@ export const getAllTemperaments = () => {
                     })
                 })
 
-        } catch (error) {
-            console.log(error.response.data)
-        }
+        .catch (error =>
+            console.log(error.response.data))
+        
     }
 }
 

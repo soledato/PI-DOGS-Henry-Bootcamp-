@@ -2,26 +2,28 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDogsbyName } from "../../redux/actions";
+import { getDogsbyName, resetByName } from "../../redux/actions";
+import { Button, ButtonSearch, DivSearchBar, Input, SearchInput, WrapperSearchBar } from "../StyledPage";
 
 
-const SearchBar = ()=>{
+
+const SearchBar = () => {
 
     const dispatch = useDispatch();
     const [name, setName] = useState("")
-    
-
-   
 
 
-    const handleChange = (e) =>{
+
+
+
+    const handleChange = (e) => {
         e.preventDefault();
         setName(e.target.value)
         console.log(name)
     }
 
-    const handleSubmit = (e) =>{
-        if(name.length < 3){
+    const handleSubmit = (e) => {
+        if (name.length < 3) {
             alert("Enter at least three characters")
         }
         e.preventDefault();
@@ -30,10 +32,14 @@ const SearchBar = ()=>{
     }
 
     return (
-      <div>
-          <input type="text" placeholder="search..." onChange={e => handleChange(e)} value={name}/>
-          <button type="submit" onClick={(e) => handleSubmit(e)}>Click here</button>
-      </div>
+        <WrapperSearchBar>
+            <DivSearchBar>
+                <SearchInput type="text" placeholder="search..." onChange={e => handleChange(e)} value={name} />
+                <ButtonSearch type="submit" onClick={(e) => handleSubmit(e)}>CLICK</ButtonSearch>
+            </DivSearchBar>
+        </WrapperSearchBar>
+
+
     )
 }
 

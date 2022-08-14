@@ -8,6 +8,15 @@ import Card from "../Card";
 import Paginado from "../Paginado";
 import SearchBar from "../SearchBar/SearchBar";
 import DogCreate from "../DogCreate/dogCreate";
+import styles from "./home.module.css"
+import { CardDiv, DivContainer, HeaderBanner, Header, TitleHeader, ContainerHome, SubtitleHeader, Button, DivOrderFilter, ImageSubtitle, Select } from "../StyledPage";
+import DogLogo from "../../recursos/logo-square.png"
+import ImageHome from "../../recursos/huella.png"
+import Loader from "../Loader";
+import Footer from "../Footer";
+
+
+
 
 
 const Home = () => {
@@ -45,7 +54,7 @@ const Home = () => {
 
    }
 
-   const handleFilterTemperaments = (e) =>{
+   const handleFilterTemperaments = (e) => {
       e.preventDefault()
       dispatch(filterByTemperaments(e.target.value))
    }
@@ -65,71 +74,99 @@ const Home = () => {
    }
 
    return (
-      <div>
-         <div>
-         <Link to='/dogs'>Create dog</Link>
-         </div>
-         <div>
-         <SearchBar />
-         <h1>Api DOGS</h1>
-         <button onClick={e => handleRefresh(e)}>Refresh</button>
-         </div>
+      <div style={{height:"100vh"}}>
 
-         <div>
-            <select onChange={e => handleOrderAlph(e)} name="ordenar alfabéticamente" id="">
-               <option hidden>Alphabetic order</option>
-               <option value="asc"> A - Z </option>
-               <option value="desc"> Z - A </option>
-            </select>
+         <HeaderBanner>
+            <div>
+               <TitleHeader> HENRY'S DOGS</TitleHeader>
+               <SubtitleHeader>catalogue <ImageSubtitle src={ImageHome} alt="img not found"/></SubtitleHeader>
+            </div>
+         </HeaderBanner>
 
-            <select onChange={e => handleOrderWeight(e)} id="">
-               <option hidden>Order by weight</option>
-               <option value="asc">  (- kg)  </option>
-               <option value="desc"> (+ kg)  </option>
-            </select>
-         </div>
+         <ContainerHome>
 
-         <div>
-            <select onChange={handleFilterTemperaments}>
-               <option value="all">All temperaments</option>
-               {
-                  allTemperaments.map(temp => (
-                     <option value={temp.name} key={temp.id}>{temp.name}</option>
-                  ))}
-            </select>
+            <div>
+               <SearchBar />
+            </div>
 
-            <select onChange={e => handleFilterBreeds(e)}>
-               <option value="all">All breeds</option>
-               <option value="existent">Existent</option>
-               <option value="created">Created</option>
-            </select>
-         </div>
+            <div>
+               <Button onClick={e => handleRefresh(e)}>Refresh</Button>
+               <Link to='/dogs' style={{ textDecoration: "none" }}><Button>Create dog</Button></Link>
+            </div>
+
+            <DivOrderFilter>
+               <label>ORDER BY NAME </label>
+               <Select onChange={e => handleOrderAlph(e)} name="ordenar alfabéticamente" id="">
+                  <option hidden>Alphabetic order</option>
+                  <option value="asc"> A - Z </option>
+                  <option value="desc"> Z - A </option>
+               </Select>
+
+
+               <label>ORDER BY WEIGHT </label>
+               <Select onChange={e => handleOrderWeight(e)} id="">
+                  <option hidden>Order by weight</option>
+                  <option value="asc">  (- kg)  </option>
+                  <option value="desc"> (+ kg)  </option>
+               </Select>
+            </DivOrderFilter>
+
+            <DivOrderFilter>
+               <label>FILTER BY TEMPERAMENTS </label>
+               <Select onChange={handleFilterTemperaments}>
+                  <option value="all">All temperaments</option>
+                  {
+                     allTemperaments.map(temp => (
+                        <option value={temp.name} key={temp.id}>{temp.name}</option>
+                     ))}
+               </Select>
+
+
+               <label>FILTER BY BREEDS </label>
+               <Select onChange={e => handleFilterBreeds(e)}>
+                  <option value="all">All breeds</option>
+                  <option value="existent">Existent</option>
+                  <option value="created">Created</option>
+               </Select>
+            </DivOrderFilter>
+         </ContainerHome>
+
+
 
          <Paginado key={paginado}
             dogsPage={dogsPage}
             allDogs={allDogs.length}
             paginado={paginado}
          />
-         {currentDogs?.map((e) => {
-            return (
-               <div key={e.id}>
-                     <div>
-                
-                        <Card
-                        name={e.name}
-                        temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) => " " + t.name.toLowerCase()))}
-                        weight_min={"Lower weight: " + e.weight_min + " kilograms"}
-                        weight_max={"Higher weight: " + e.weight_max + " kilograms"}
-                        image={e.image}
-                        />
-                         <Link to={"/dogs/"+e.id}> <button>more...</button> </Link>
-                 
-                     </div>
-               </div>
-            )
-         }
-         )}
 
+
+         <DivContainer>
+            {currentDogs.length? currentDogs.map((e) => {
+               return (
+                  <Link to={"/dogs/" + e.id} style={{ textDecoration: 'none' }}>
+                     <CardDiv key={e}>
+                        <Card
+                           name={e.name}
+                           temperament={e.temperament ? e.temperament.toLowerCase() : (e.temperaments && e.temperaments.map((t) => " " + t.name.toLowerCase()))}
+                           weight_min={"Lower weight: " + e.weight_min + " kilograms"}
+                           weight_max={"Higher weight: " + e.weight_max + " kilograms"}
+                           image={e.image}
+                        />
+                     </CardDiv>
+                  </Link>
+               )
+            }
+            )
+            :
+            <div>
+               <Loader/>
+            </div>
+         }
+         </DivContainer>
+
+
+
+         <Footer/>
       </div>
 
    )
