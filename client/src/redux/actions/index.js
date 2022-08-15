@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 
 export const GET_ALL_DOGS = "GET_ALL_DOGS"
 export const ORDER_ALPHABETIC = "ORDER_ALPHABETIC"
@@ -98,10 +98,28 @@ export const getDogDetail = (id) => {
 
 }
 
+// export const postDog = (payload) => {
+//     return async function () {
+//         const response = await axios.post("http://localhost:3001/dogs", payload)
+//         return response
+//     }
+// }
+
 export const postDog = (payload) => {
-    return async function () {
-        const response = await axios.post("http://localhost:3001/dogs", payload)
-        return response
+    return async function(dispatch){
+        axios.post("http://localhost:3001/dogs", payload)
+        .then(response => {
+            dispatch({
+                type: POST_DOG,
+                payload: response
+            })
+            alert(response.data.msg)
+        })
+        .catch(function (error){
+            if(error.response){
+                alert(error.response.data)
+            }
+        })
     }
 }
 

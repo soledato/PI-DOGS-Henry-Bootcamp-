@@ -27,8 +27,7 @@ const DogCreate = () => {
     const history = useHistory("/home")
 
     const validate = (input) => {
-        // let dogName = allDogs.filter(e => (e.name).toLowerCase() === (input.name).toLowerCase())
-        // console.log(dogName)
+        
         let errors = {}
         if (!input.name) {
             errors.name = "Name is required"
@@ -36,9 +35,7 @@ const DogCreate = () => {
         else if (!/^[A-Za-z]+$/.test(input.name)) {
             errors.name = "The name must contain only letters"
         }
-        // else if (dogName.lenght > 0) {     //VEEEER
-        //     errors.name = "Existing name"
-        // }
+        
         else if (input.name.length < 3) {
             errors.name = "The name must contain at least 3 characters"
         }
@@ -119,7 +116,6 @@ const DogCreate = () => {
         } else {
             setErrors(validate(input))
             dispatch(postDog(input))
-            alert("Dog create")
             setInput({
                 name: "",
                 height_min: "",
@@ -129,7 +125,9 @@ const DogCreate = () => {
                 life_span: "",
                 temperaments: []
             })
-            history.push('/home')
+            
+            
+            // history.push('/home')
         }
     }
 
