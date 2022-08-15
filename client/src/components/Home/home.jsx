@@ -25,7 +25,7 @@ const Home = () => {
 
    const allDogs = useSelector((state) => state.dogs)
    const allTemperaments = useSelector((state) => state.allTemperaments)
-   console.log(allDogs)
+   // console.log(allDogs)
    const [currentPage, setCurrentPage] = useState(1)
    const [dogsPage, setDogsPage] = useState(8)
    const lastDogIndex = currentPage * dogsPage
