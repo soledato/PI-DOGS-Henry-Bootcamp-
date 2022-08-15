@@ -26,6 +26,9 @@ describe('Dog model', () => {
         .then(() => done (new Error ('Must be a string')))
         .catch(() => done ());
       });
+      it("Receives a string", () =>{
+        Dog.create({height_min: "5"})
+      })
     })
   });
 });
