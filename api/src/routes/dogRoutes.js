@@ -1,8 +1,6 @@
 const { Router } = require('express');
 const { Dog, Temperament } = require('../db')
-const { getAllDogs} = require('../controllers/dogControllers');
-
-
+const { getAllDogs, deletedDog, updateDog} = require('../controllers/dogControllers');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -30,11 +28,11 @@ router.get('/:id', async (req, res, next) => {
     try {
         const { id } = req.params
         const allDogs = await getAllDogs()
-        if(id){
-        const dogId= await allDogs.filter(e => e.id == id)
-        dogId ? 
-        res.status(200).json(dogId) :
-        res.status(404).send('Dog not found')
+        if (id) {
+            const dogId = await allDogs.filter(e => e.id == id)
+            dogId ?
+                res.status(200).json(dogId) :
+                res.status(404).send('Dog not found')
         }
 
 
@@ -45,42 +43,58 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     // if (!name || !height_min || !height_max || !weight_min || !weight_max) {
-        //     return res.status(404).send('Falta algún parámetro obligatorio')
-        // }
-        try {
-        const { name, 
-            height_min, 
-            height_max, 
-            weight_min, 
-            weight_max, 
-            image, 
-            temperaments, 
-            life_span, 
+    //         return res.status(404).send('Falta algún parámetro obligatorio')
+    //     }
+    try {
+
+        const { name,
+            height_min,
+            height_max,
+            weight_min,
+            weight_max,
+            image,
+            temperaments,
+            life_span,
             createdInDb } = req.body
+
+        // const findName = await Dog.findAll({ where: { name: name } });
+        // if (findName.length != 0) {
+        //     return res.status(404).send("The dog's name is already exists")
+        // }
+
+
+        const allNames = await getAllDogs()
+        const findName = allNames.find(dog => dog.name === name)
+
+        if(findName){
+            return res.status(404).send("The dog's name is already exists")
+        }
+
         const newDog = await Dog.create({
-            name, 
-            height_min, 
-            height_max, 
-            weight_min, 
-            weight_max, 
-            life_span,  
+            name,
+            height_min,
+            height_max,
+            weight_min,
+            weight_max,
+            life_span,
             createdInDb,
             temperaments,
-            image: image ? image : "https://images.unsplash.com/photo-1505628346881-b72b27e84530?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+            image: image ? image : "https://images.unsplash.com/photo-1607923432780-7a9c30adcb72?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80"
         })
 
         let dbTemperament = await Temperament.findAll({
-            where: {name: temperaments},
-        })  
+            where: { name: temperaments },
+        })
         newDog.addTemperament(dbTemperament)
-
-        res.status(201).json(newDog)
+        res.status(201).json({msg: "Created dog"})
     } catch (error) {
         next(error)
     }
 })
-    
 
+
+router.delete('/:id', deletedDog)
+router.put('/:id', updateDog)
 
 
 // Configurar los routers

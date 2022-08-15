@@ -8,27 +8,27 @@ const URL = `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`
 async function getDogApi() {
   let dogsApi = (await axios(URL)).data.map(e => {
     return {
-      id: e.id, 
+      id: e.id,
       name: e.name.toLowerCase(),
       temperament: e.temperament,
       height_min: Number(e.height.metric.split("-")[0] || 0),
       height_max: Number(e.height.metric.split("-")[1] || NaN),
       weight_min: Number(e.weight.metric.split("-")[0] || 0),
-      weight_max: Number(e.weight.metric.split("-")[1] ||NaN),
+      weight_max: Number(e.weight.metric.split("-")[1] || NaN),
       life_span: e.life_span,
-      image: e.image.url 
-    } 
+      image: e.image.url
+    }
   })
   console.log(dogsApi)
   return dogsApi
 }
-  
-async function getDogDB(){
+
+async function getDogDB() {
   return await Dog.findAll({
-    include:{
+    include: {
       model: Temperament,
       attributes: ['name'],
-      through:{
+      through: {
         attributes: [],
       },
     }
@@ -43,9 +43,36 @@ async function getAllDogs() {
   console.log(allDogs[3])
   return allDogs
 }
-//---- 
+//--------------------- EXTRAS ---------------------------- 
 
+
+async function deletedDog(req, res, next) {
+  const { id } = req.params;
+  try {
+    await Dog.destroy({
+      where: { id },
+    });
+    res.status(200).send("Dog deleted")
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function updateDog(req, res, next){
+  const {id} = req.params;
+  const dog = req.body
+  try {
+    await Dog.update(dog, {
+      where : {id},
+    });
+    res.status(200).send("Dog updated")
+  } catch (error) {
+    next(error)
+  }
+}
 
 module.exports = {
-  getAllDogs
+  getAllDogs,
+  deletedDog,
+  updateDog
 }
