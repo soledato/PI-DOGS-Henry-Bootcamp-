@@ -18,5 +18,14 @@ describe('Dog model', () => {
         Dog.create({ name: 'Pug' });
       });
     });
+
+    //-----------TEST EXTRA MODEL----------------
+    describe('height_min', () => {
+      it('Throw an error if height_min is not a string', (done) =>{
+        Dog.create({height_min: "5"})
+        .then(() => done (new Error ('Must be a string')))
+        .catch(() => done ());
+      });
+    })
   });
 });
