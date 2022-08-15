@@ -18,6 +18,7 @@ router.get('/', async (req, res, next) => {
             res.status(404).send('Dog not found')
         } else {
             res.status(200).json(allDogs)
+            console.log(allDogs)
         }
     } catch (error) {
         next(error)
@@ -70,12 +71,14 @@ router.post('/', async (req, res, next) => {
             return res.status(404).send("The dog's name is already exists")
         }
 
+       
+
         const newDog = await Dog.create({
             name,
             height_min,
             height_max,
-            weight_min,
-            weight_max,
+            weight_min: Number(weight_min),
+            weight_max: Number (weight_max),
             life_span,
             createdInDb,
             temperaments,

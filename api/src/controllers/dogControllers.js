@@ -11,10 +11,10 @@ async function getDogApi() {
       id: e.id,
       name: e.name.toLowerCase(),
       temperament: e.temperament,
-      height_min: Number(e.height.metric.split("-")[0] || 0),
-      height_max: Number(e.height.metric.split("-")[1] || NaN),
-      weight_min: Number(e.weight.metric.split("-")[0] || 0),
-      weight_max: Number(e.weight.metric.split("-")[1] || NaN),
+      height_min: Number(e.height.metric.split("-")[0]), //|| 0),
+      height_max: Number(e.height.metric.split("-")[1]), //|| 0),
+      weight_min: Number(e.weight.metric.split("-")[0]), //|| 0),
+      weight_max: Number(e.weight.metric.split("-")[1]), //|| 0),
       life_span: e.life_span,
       image: e.image.url
     }
@@ -40,7 +40,7 @@ async function getAllDogs() {
   const dogsApi = await getDogApi();
   const dogsDB = await getDogDB();
   const allDogs = dogsApi.concat(dogsDB)
-  console.log(allDogs[3])
+  // console.log(allDogs[3])
   return allDogs
 }
 //--------------------- EXTRAS ---------------------------- 
