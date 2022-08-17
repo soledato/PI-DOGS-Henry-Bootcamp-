@@ -29,6 +29,7 @@ const DogCreate = () => {
     const validate = (input) => {
         
         let errors = {}
+
         if (!input.name) {
             errors.name = "Name is required"
         }
@@ -84,6 +85,7 @@ const DogCreate = () => {
         else if (input.life_span > 20) {
             errors.life_span = "This parameter cannot exceed 20 years"
         }
+
         
         return errors
     }
@@ -109,9 +111,9 @@ const DogCreate = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!input.name || !input.height_min || !input.height_max || !input.weight_min || !input.weight_max || !input.life_span || !input.temperaments.length === 0) {
+        if (!input.name || !input.height_min || !input.height_max || !input.weight_min || !input.weight_max || !input.life_span || input.temperaments.length === 0) {
             alert("Complete the required fields (*)")
-        } else if (errors.name || errors.height_min || errors.height_max || errors.weight_min || errors.weight_max || errors.life_span || errors.temperaments) {
+        } else if (errors.name || errors.height_min || errors.height_max || errors.weight_min || errors.weight_max || errors.life_span) {
             alert("Please, review the required data")
         } else {
             setErrors(validate(input))
@@ -137,10 +139,7 @@ const DogCreate = () => {
                 ...input,
                 temperaments: [...input.temperaments, e.target.value]
             });
-            setErrors(validate({
-                ...input,
-                temperaments: [...input.temperaments, e.target.value]
-            }))
+            
 
 
         }else {
@@ -225,7 +224,7 @@ const DogCreate = () => {
                         <div>
                             <label>*Temperaments: </label>
                         </div>
-                        <SelectForm onChange={(e) => handleSelectTemp(e)}>
+                        <SelectForm  name="temperaments" onChange={(e) => handleSelectTemp(e)}>
                             <option hidden>All temperaments</option>
                             {
                                 temperaments && temperaments.map(temp => (
