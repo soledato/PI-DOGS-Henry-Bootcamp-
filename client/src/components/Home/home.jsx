@@ -7,7 +7,7 @@ import { getAllDogs, filterByBreeds, orderAlphabetic, orderWeight, getAllTempera
 import Card from "../Card";
 import Paginado from "../Paginado";
 import SearchBar from "../SearchBar/SearchBar";
-import DogCreate from "../DogCreate/dogCreate";
+// import DogCreate from "../DogCreate/dogCreate";
 import styles from "./home.module.css"
 import { CardDiv, DivContainer, HeaderBanner, Header, TitleHeader, ContainerHome, SubtitleHeader, Button, DivOrderFilter, ImageSubtitle, Select } from "../StyledPage";
 import DogLogo from "../../recursos/logo-square.png"
