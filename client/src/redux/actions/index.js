@@ -15,7 +15,7 @@ export const RESET_STATE = "RESET_STATE"
 
 
 export const getAllDogs = () => {
-    return async function (dispatch) {
+    return /*async*/ function (dispatch) {
         axios.get("http://localhost:3001/dogs")
             .then(response => {
                 dispatch({
@@ -30,12 +30,12 @@ export const getAllDogs = () => {
 
 // export function getAllDogs() {
 //     return async function (dispatch) {
-//             const res= await axios.get("http://localhost:3001/dogs",{
+//             const response= await axios.get("http://localhost:3001/dogs",{
 
 //             });
 //             return dispatch({
 //                 type: GET_ALL_DOGS,
-//                 payload: res.data
+//                 payload: response.data
 //             })
 //     };
 // };
@@ -44,7 +44,7 @@ export const getAllDogs = () => {
 
 
 export const getDogsbyName = (name) => {
-    return async function (dispatch) {
+    return /*async*/ function (dispatch) {
         axios.get(`http://localhost:3001/dogs?name=${name}`)
             .then(response => {
                 dispatch({
@@ -65,7 +65,7 @@ export const getDogsbyName = (name) => {
 }
 
 export const getAllTemperaments = () => {
-    return async function (dispatch) {
+    return /*async*/ function (dispatch) {
         
             axios.get(`http://localhost:3001/temperaments`)
                 .then(response => {
@@ -82,19 +82,24 @@ export const getAllTemperaments = () => {
 }
 
 export const getDogDetail = (id) => {
-    return async function (dispatch) {
-        try {
+    return /*async*/ function (dispatch) {
+        
             axios.get(`http://localhost:3001/dogs/${id}`)
                 .then(response => {
-                    return dispatch({
+                     dispatch({
                         type: GET_DOG_DETAIL,
                         payload: response.data
                     })
                 })
-            console.log(id)
-        } catch (error) {
-            console.log(error.response.data)
-        }
+            // console.log(id)
+            .catch(function (error) {
+                if (error.response) {
+                    // Request made and server responded
+                    alert(error.response.data);
+                    console.log(error.response.status);
+                    
+                }
+            })
     }
 
 }
@@ -107,7 +112,7 @@ export const getDogDetail = (id) => {
 // }
 
 export const postDog = (payload) => {
-    return async function(dispatch){
+    return /*async*/ function(dispatch){
         axios.post("http://localhost:3001/dogs", payload)
         .then(response => {
             dispatch({
