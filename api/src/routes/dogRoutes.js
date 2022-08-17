@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { Dog, Temperament } = require('../db')
-const { getAllDogs, deletedDog, updateDog} = require('../controllers/dogControllers');
+const { getAllDogs, deletedDog, updateDog } = require('../controllers/dogControllers');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -31,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
         const allDogs = await getAllDogs()
         if (id) {
             const dogId = await allDogs.filter(e => e.id == id)
-            dogId ?
+            dogId.length > 0 ?
                 res.status(200).json(dogId) :
                 res.status(404).send('Dog not found')
         }
@@ -43,9 +43,7 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
-    // if (!name || !height_min || !height_max || !weight_min || !weight_max) {
-    //         return res.status(404).send('Falta algún parámetro obligatorio')
-    //     }
+
     try {
 
         const { name,
@@ -58,27 +56,24 @@ router.post('/', async (req, res, next) => {
             life_span,
             createdInDb } = req.body
 
-        // const findName = await Dog.findAll({ where: { name: name } });
-        // if (findName.length != 0) {
-        //     return res.status(404).send("The dog's name is already exists")
-        // }
+
 
 
         const allNames = await getAllDogs()
         const findName = allNames.find(dog => dog.name === name)
 
-        if(findName){
+        if (findName) {
             return res.status(404).send("The dog's name is already exists")
         }
 
-       
+
 
         const newDog = await Dog.create({
-            name,
-            height_min,
-            height_max,
+            name: name.toLowerCase(),
+            height_min: Number(height_min),
+            height_max: Number(height_max),
             weight_min: Number(weight_min),
-            weight_max: Number (weight_max),
+            weight_max: Number(weight_max),
             life_span,
             createdInDb,
             temperaments,
@@ -89,7 +84,7 @@ router.post('/', async (req, res, next) => {
             where: { name: temperaments },
         })
         newDog.addTemperament(dbTemperament)
-        res.status(201).json({msg: "Created dog"})
+        res.status(201).json({ msg: "Created dog" })
     } catch (error) {
         next(error)
     }
