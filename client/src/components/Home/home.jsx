@@ -21,33 +21,37 @@ import Footer from "../Footer";
 const Home = () => {
 
    const dispatch = useDispatch();
-   
+
    const allDogs = useSelector((state) => state.dogs)
    const allTemperaments = useSelector((state) => state.allTemperaments)
    // console.log(allDogs)
-   const [currentPage, setCurrentPage] = useState(1)
-   const [dogsPage, setDogsPage] = useState(8)
-   const lastDogIndex = currentPage * dogsPage
-   const firstDogIndex = lastDogIndex - dogsPage
-   const currentDogs = allDogs.slice(firstDogIndex, lastDogIndex)
    const [order, setOrder] = useState('')
    
+   //paginado
+   const [currentPage, setCurrentPage] = useState(1)
+   const [dogsPage, setDogsPage] = useState(8)
+   
+   const lastDog = currentPage * dogsPage  //8
+   const firstDog = lastDog - dogsPage // 8 - 8 = 0
+   const currentDogs = allDogs.slice(firstDog, lastDog) //dogs en la página actual
+   
+   
+   const paginado = (pageNum) => {
+      setCurrentPage(pageNum)
+   }
    //estados globales filtros
    // const typeFilter = useSelector((state) => state.typeFilter)
    // const breedFilter = useSelector((state) => state.breedFilter)
    // const temperamentFilter= useSelector((state) => state.temperamentFilter)
-   
+
    // let dogs= []
-   
+
    // typeFilter === 'existent'? dogs = dogs.filter(d => typeof d.id === "number") : dogs = allDogs
    // typeFilter === 'created' ? dogs = dogs.filter(d => typeof d.id !== "number") : dogs = allDogs
    // temperamentFilter.length !== 0 && temperamentFilter !== 'all' ? dogs = dogs.filter(d => d.temperaments.includes(temperamentFilter) || d.temperament.includes(temperamentFilter)) : dogs = allDogs
 
 
 
-   const paginado = (pageNum) => {
-      setCurrentPage(pageNum)
-   }
 
    useEffect(() => {
       dispatch(getAllDogs())
@@ -62,12 +66,14 @@ const Home = () => {
    const handleFilterBreeds = (e) => {
       e.preventDefault()
       dispatch(filterByBreeds(e.target.value))
+      setCurrentPage(1)
 
    }
 
    const handleFilterTemperaments = (e) => {
       e.preventDefault()
       dispatch(filterByTemperaments(e.target.value))
+      setCurrentPage(1)
    }
 
    const handleOrderAlph = (e) => {
@@ -85,12 +91,12 @@ const Home = () => {
    }
 
    return (
-      <div style={{height:"100vh"}}>
+      <div style={{ height: "100vh" }}>
 
          <HeaderBanner>
             <div>
                <TitleHeader> HENRY'S DOGS</TitleHeader>
-               <SubtitleHeader>catalogue <ImageSubtitle src={ImageHome} alt="img not found"/></SubtitleHeader>
+               <SubtitleHeader>catalogue <ImageSubtitle src={ImageHome} alt="img not found" /></SubtitleHeader>
             </div>
          </HeaderBanner>
 
@@ -152,9 +158,9 @@ const Home = () => {
 
 
          <DivContainer>
-            {currentDogs.length? currentDogs.map((e) => {
+            {currentDogs.length ? currentDogs.map((e) => {
                return (
-                  <Link to={"/dogs/" + e.id} style={{ textDecoration: 'none' }}>
+                  <Link to={"/dogs/" + e.id} key={e.id} style={{ textDecoration: 'none' }}>
                      <CardDiv key={e}>
                         <Card
                            name={e.name}
@@ -168,16 +174,16 @@ const Home = () => {
                )
             }
             )
-            :
-            <div>
-               <Loader/>
-            </div>
-         }
+               :
+               <div>
+                  <Loader />
+               </div>
+            }
          </DivContainer>
 
 
 
-         <Footer/>
+         <Footer />
       </div>
 
    )

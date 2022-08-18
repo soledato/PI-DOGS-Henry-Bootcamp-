@@ -3,8 +3,7 @@ import React from 'react'
 import { NumberPaginate, PaginationContainer } from './StyledPage'
 
 
-const Paginado = ({ currentPage, allDogs, dogsPage, paginado }) => {
-
+const Paginado = ({ allDogs, dogsPage, paginado }) => {
 
     const pageNum = []
 
@@ -26,7 +25,6 @@ const Paginado = ({ currentPage, allDogs, dogsPage, paginado }) => {
                         {pageNum?.map(num =>
                             <NumberPaginate 
                                 onClick={() => paginado(num)} key={num}>{num}
-                                
                             </NumberPaginate>
                         )}
                     </li>
