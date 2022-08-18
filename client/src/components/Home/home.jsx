@@ -7,7 +7,6 @@ import { getAllDogs, filterByBreeds, orderAlphabetic, orderWeight, getAllTempera
 import Card from "../Card";
 import Paginado from "../Paginado";
 import SearchBar from "../SearchBar/SearchBar";
-// import DogCreate from "../DogCreate/dogCreate";
 import styles from "./home.module.css"
 import { CardDiv, DivContainer, HeaderBanner, Header, TitleHeader, ContainerHome, SubtitleHeader, Button, DivOrderFilter, ImageSubtitle, Select } from "../StyledPage";
 import DogLogo from "../../recursos/logo-square.png"
@@ -22,7 +21,7 @@ import Footer from "../Footer";
 const Home = () => {
 
    const dispatch = useDispatch();
-
+   
    const allDogs = useSelector((state) => state.dogs)
    const allTemperaments = useSelector((state) => state.allTemperaments)
    // console.log(allDogs)
@@ -32,6 +31,19 @@ const Home = () => {
    const firstDogIndex = lastDogIndex - dogsPage
    const currentDogs = allDogs.slice(firstDogIndex, lastDogIndex)
    const [order, setOrder] = useState('')
+   
+   //estados globales filtros
+   // const typeFilter = useSelector((state) => state.typeFilter)
+   // const breedFilter = useSelector((state) => state.breedFilter)
+   // const temperamentFilter= useSelector((state) => state.temperamentFilter)
+   
+   // let dogs= []
+   
+   // typeFilter === 'existent'? dogs = dogs.filter(d => typeof d.id === "number") : dogs = allDogs
+   // typeFilter === 'created' ? dogs = dogs.filter(d => typeof d.id !== "number") : dogs = allDogs
+   // temperamentFilter.length !== 0 && temperamentFilter !== 'all' ? dogs = dogs.filter(d => d.temperaments.includes(temperamentFilter) || d.temperament.includes(temperamentFilter)) : dogs = allDogs
+
+
 
    const paginado = (pageNum) => {
       setCurrentPage(pageNum)
@@ -40,7 +52,6 @@ const Home = () => {
    useEffect(() => {
       dispatch(getAllDogs())
       dispatch(getAllTemperaments())
-      // dispatch(filterByTemperaments())
    }, [dispatch])
 
 

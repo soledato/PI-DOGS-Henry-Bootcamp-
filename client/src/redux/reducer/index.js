@@ -1,13 +1,17 @@
 /* eslint-disable use-isnan */
 /* eslint-disable no-unused-vars */
 /* eslint-disable default-case */
-import { GET_ALL_DOGS, FILTER_BY_BREEDS, ORDER_ALPHABETIC, ORDER_WEIGHT, GET_DOGS_BY_NAME, POST_DOG, GET_ALL_TEMPERAMENTS, FILTER_BY_TEMPERAMENTS, GET_DOG_DETAIL, RESET_STATE } from "../actions"
+import { GET_ALL_DOGS, FILTER_BY_BREEDS, ORDER_ALPHABETIC, ORDER_WEIGHT, GET_DOGS_BY_NAME, POST_DOG, GET_ALL_TEMPERAMENTS, FILTER_BY_TEMPERAMENTS, GET_DOG_DETAIL, RESET_STATE, DELETE_CREATED_DOG } from "../actions"
 
 const initialState = {
     dogs: [],
     allDogs: [],
     allTemperaments: [],
-    dogDetail: []
+    dogDetail: [],
+    typeFilter: "",
+    breedFilter: [],
+    temperamentFilter: []
+
 };
 
 function rootReducer(state = initialState, action) {
@@ -138,10 +142,6 @@ function rootReducer(state = initialState, action) {
                 dogs: orderWeight
             }
 
-
-
-        
-           
 
         case RESET_STATE:
             return {
