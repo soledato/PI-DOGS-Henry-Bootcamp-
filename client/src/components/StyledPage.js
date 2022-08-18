@@ -276,6 +276,7 @@ font-size: 30px;
 export const Hr = styled.hr`
 width: 70%
 `
+
 //#endregion
 //#region -------------------LOADER STYLE-------------------------
 
@@ -286,48 +287,6 @@ align-items: center;
 //#endregion
 //#region --------------------FORM STYLE--------------------------
 
-
-/* export const DivH1= styled.div`
-grid-area: 1/3/2/6;
-`
-export const DivsInput= styled.div`
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-grid-template-rows: repeat(1, 1fr);
-margin-top: 2rem;
-justify-content: center;
-align-items: center;
-grid-area: 1/1/2/6;
-`
-
-export const FormStyle= styled.form`
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-width: 40%;
-height: 40rem;
-grid-template-rows: repeat(13, 1fr);  
-background-color: #f5f5f5;
-border: 2px solid #f5f5f5;
-border-radius: 4px;
-color: #211E1C;
-box-sizing: content-box;
-`
-export const DivTemperament = styled.div`
-display: grid;
-grid-template-columns: repeat(7, 1fr);
-grid-template-rows: repeat(2, 1fr);
-align-items: center;
-grid-area: "8/1/9/7" 
-`
-
-export const InputForm2 = styled.input`
-display: block;
-width: 250%;
-padding: 5px;
-margin: 2px;
-border-radius: 4px;
-border: solid 1px #211E1C; */
-/* ` */
 
 export const DivFormContainer = styled.div`
 display: flex;
@@ -437,6 +396,12 @@ color: white;
 justify-content: center;
 text-align: center;
 `
-
+export const BtnDelete = styled(ButtonForm)`
+background-color: #A72530;
+&:hover{
+  box-shadow: 0 0 40px 40px #ffffff inset;
+  color: #211E1C;
+}
+`
 
 //#endregion
