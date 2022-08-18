@@ -12,6 +12,7 @@ export const FILTER_BY_TEMPERAMENTS = "FILTER_BY_TEMPERAMENTS"
 export const GET_DOG_DETAIL = "GET_DOG_DETAIL"
 export const RESET_STATE = "RESET_STATE"
 export const DELETE_CREATED_DOG = "DELETE_CREATED_DOG"
+export const EDIT_DOG = "EDIT_DOG"
 
 
 
@@ -164,6 +165,5 @@ export const resetState = () => {
         type: RESET_STATE
     }
 }
-
 
 
