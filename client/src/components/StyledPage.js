@@ -403,5 +403,28 @@ background-color: #A72530;
   color: #211E1C;
 }
 `
-
+export const ALink= styled.a`
+  color: white;
+  text-decoration: none;
+  &:hover{
+    color: white;
+    text-decoration: none
+  }
+  &:visited{
+    color: white;
+    text-decoration: none
+  }
+`
+export const ALanding= styled.a`
+  color: #211E1C;
+  text-decoration: none;
+  &:hover{
+    color: #211E1C;
+    text-decoration: none
+  }
+  &:visited{
+    color:#211E1C;
+    text-decoration: none
+  }
+`
 //#endregion
