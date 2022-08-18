@@ -3,23 +3,34 @@ import React from "react"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router"
-import { getDogDetail, resetState } from "../../redux/actions"
-import { Link } from "react-router-dom"
-import { Button, ContainerDetail, Contenido, ContentDetail1, ContentDetail2, Hr, ImgCardDetail, ParagraphDetail, TitleDetail} from "../StyledPage"
+import { getDogDetail, resetState, getAllDogs } from "../../redux/actions"
+import { deleteDog } from "../../functionDelete"
+import { Link} from "react-router-dom"
+import { useHistory } from "react-router"
+import { BtnDelete, Button, ContainerDetail, Contenido, ContentDetail1, ContentDetail2, Hr, ImgCardDetail, ParagraphDetail, TitleDetail} from "../StyledPage"
 import ImageHome from "../../recursos/huella.png"
 import Loader from "../Loader"
 import Footer from "../Footer"
+
+
 
 
 const DogDetail = () => {
     const dispatch = useDispatch()
     const dog = useSelector((state) => state.dogDetail)
     const { id } = useParams()
+    const history = useHistory()
 
     useEffect(() => {
         dispatch(getDogDetail(id))
         dispatch(resetState())
     }, [dispatch, id])
+
+    const handleDelete = () =>{
+        deleteDog(id);
+        history.push('/home')
+    }
+
 
 
     return (
@@ -50,6 +61,12 @@ const DogDetail = () => {
                             <ParagraphDetail>Lower height: {dog[0].height_min} centimeters</ParagraphDetail>
                             <ParagraphDetail>Higher height: {dog[0].height_max} centimeters</ParagraphDetail>
                             <ParagraphDetail>Life span: {dog[0].life_span}</ParagraphDetail>
+                        
+                        {dog[0].id.length === 36 &&
+                        <div>
+                            <BtnDelete onClick={e => handleDelete(e)}>DELETE</BtnDelete>
+                        </div>
+                        }
                         </ContentDetail1>
                     </>
                     
