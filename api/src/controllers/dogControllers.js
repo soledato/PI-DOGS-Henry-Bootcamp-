@@ -1,5 +1,6 @@
 const axios = require("axios");
 const e = require("express");
+// const { Sequelize } = require("sequelize/types");
 const { Dog, Temperament } = require("../db");
 const { API_KEY } = process.env
 
@@ -57,21 +58,39 @@ const deletedDog = async (req, res, next) => {
   }
 }
 
-async function updateDog(req, res, next){
-  const {id} = req.params;
-  const dog = req.body
-  try {
-    await Dog.update(dog, {
-      where : {id},
-    });
-    res.status(200).send("Dog updated")
-  } catch (error) {
-    next(error)
-  }
-}
+// async function updateDog(req, res, next){
+//   const {id} = req.params;
+//   const {height_min,height_max, weight_min, weight_max, image, temperaments,life_span} = req.body
+//   const temperamentsInDB= await Temperament.findAll({
+//     where:{
+//       name:{
+//         [Op.or]:[temperaments]
+//       }
+//     }
+//   });
+//   try {
+//    dogEdit = await Dog.findByPk(id, {
+//       include: {
+//         model: Temperament,
+//         attributes: ['name'],
+//         through:{
+//           attributes:[],
+//         }
+//       }
+//     })
+//     await dogEdit.update(height_min,height_max, weight_min, weight_max, image, temperaments,life_span, {
+//       where : {
+//         id : id
+//       } 
+//     });
+//     dogEdit.setTemperament(temperamentsInDB)  
+//     res.status(200).send({msg: "Dog updated"})
+//   } catch (error) {
+//     next(error)
+//   }
+// }
 
 module.exports = {
   getAllDogs,
   deletedDog,
-  updateDog
 }

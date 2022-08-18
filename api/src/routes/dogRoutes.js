@@ -92,7 +92,8 @@ router.post('/', async (req, res, next) => {
 
 
 router.delete('/:id/delete', deletedDog)
-router.put('/:id', updateDog)
+
+// router.put('/:id/', updateDog)
 
 
 // Configurar los routers
