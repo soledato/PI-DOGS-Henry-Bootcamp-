@@ -25,7 +25,7 @@ const Home = () => {
    const allDogs = useSelector((state) => state.dogs)
    const allTemperaments = useSelector((state) => state.allTemperaments)
    // console.log(allDogs)
-   const [order, setOrder] = useState('')
+   const [, setOrder] = useState('')
    
    //paginado
    const [currentPage, setCurrentPage] = useState(1)
