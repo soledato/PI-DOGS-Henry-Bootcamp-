@@ -60,7 +60,7 @@ router.post('/', async (req, res, next) => {
 
 
         const allNames = await getAllDogs()
-        const findName = allNames.find(dog => dog.name === name)
+        const findName = allNames.find(dog => dog.name.toLowerCase() === name.toLowerCase() )
 
         if (findName) {
             return res.status(404).send("The dog's name is already exists")
@@ -91,7 +91,7 @@ router.post('/', async (req, res, next) => {
 })
 
 
-router.delete('/:id', deletedDog)
+router.delete('/:id/delete', deletedDog)
 router.put('/:id', updateDog)
 
 

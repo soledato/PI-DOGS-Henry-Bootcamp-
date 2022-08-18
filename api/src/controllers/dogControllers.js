@@ -46,13 +46,12 @@ async function getAllDogs() {
 //--------------------- EXTRAS ---------------------------- 
 
 
-async function deletedDog(req, res, next) {
+const deletedDog = async (req, res, next) => {
   const { id } = req.params;
   try {
-    await Dog.destroy({
-      where: { id },
-    });
-    res.status(200).send("Dog deleted")
+    dogDelete= await Dog.findByPk(id)
+    dogDelete.destroy();
+    res.status(200).send({msg: "Dog deleted"})
   } catch (error) {
     next(error)
   }
